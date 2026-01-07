@@ -2,26 +2,44 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Mulish', sans-serif;
 }
 
 body {
     background-color: #ffffff;
-    color: #333333;
+    color: #02060c;
+    overflow-x: hidden;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .container {
-    width: 1200px;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 20px;
 }
 
 .header {
-    border-bottom: 1px solid #dddddd;
-    position: relative;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
     top: 0;
     background: #ffffff;
     height: 80px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
 }
 
 .header-content {
@@ -34,44 +52,57 @@ body {
 .logo-section {
     display: flex;
     align-items: center;
+    transition: transform 0.2s;
+}
+
+.logo-section:hover {
+    transform: scale(1.02);
 }
 
 .logo {
     height: 100px;
-    margin-left: 20px;
+    /* Adjusted size */
+    margin-right: -25px;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: rotate(-5deg);
 }
 
 .logo-text {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 800;
     color: #fc8019;
     cursor: pointer;
-    margin-left: -30px;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 40px;
 }
 
 .nav-links a {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #333333;
-    font-weight: 600;
+    color: #3d4152;
+    font-weight: 500;
     font-size: 16px;
+    transition: color 0.2s, transform 0.2s;
 }
 
 .nav-links a:hover {
     color: #fc8019;
+    transform: translateY(-2px);
 }
 
 .nav-links a img {
-    width: 25px;
+    width: 20px;
     height: 20px;
     margin-right: 10px;
+    object-fit: contain;
 }
 
 .section {
@@ -80,43 +111,74 @@ body {
 
 .section-divider {
     border: 0;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #f0f0f5;
     margin-top: 30px;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .section-title {
     font-size: 24px;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 20px;
-    text-align: center;
+    font-weight: 800;
+    color: #02060c;
+    margin-bottom: 25px;
 }
 
 .mind-grid {
+    overflow: hidden;
+    /* Hide overflow for marquee */
+    padding-bottom: 20px;
+    margin-left: 0;
+    /* Align with container */
+    width: 100%;
+}
+
+.mind-track {
     display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    margin-left: 30px;
+    gap: 32px;
+    width: max-content;
+    animation: scroll 20s linear infinite;
+}
+
+.mind-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+    /* -50% because we duplicated width */
+}
+
+/* No scrollbar needed anymore, but keeping clean cleanup */
+.mind-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .mind-grid img {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 50%;
-    min-width: 140px;
+    width: 144px;
+    height: 180px;
+    object-fit: contain;
+    min-width: 144px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* No individual animation */
 }
 
-.restaurant-scroll {
+.mind-grid img:hover {
+    transform: scale(1.05);
+}
+
+.restaurant-scroll,
+.delivery-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 32px;
     padding-bottom: 20px;
 }
 
@@ -124,22 +186,33 @@ body {
     text-decoration: none;
     color: inherit;
     display: block;
-    min-width: 270px;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    border-radius: 16px;
+}
+
+.restaurant-card:hover {
+    transform: scale(0.98);
 }
 
 .res-img-container {
     position: relative;
     width: 100%;
-    height: 180px;
-    border-radius: 15px;
+    height: 182px;
+    border-radius: 16px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .res-img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.restaurant-card:hover .res-img-container img {
+    transform: scale(1.03);
 }
 
 .offer-overlay {
@@ -147,28 +220,35 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
+    padding: 8px 12px;
+    background: linear-gradient(rgba(27, 30, 36, 0) 0%, rgb(27, 30, 36) 84.21%);
     color: #ffffff;
-    font-weight: bold;
-    font-size: 18px;
+    font-weight: 800;
+    font-size: 22px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    /* Ensure visible */
+    align-items: flex-end;
+    /* Align to bottom */
 }
 
 .res-info h3 {
     font-size: 18px;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 5px;
+    font-weight: 700;
+    color: #02060c;
+    margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .res-meta-line {
     display: flex;
     align-items: center;
     font-size: 16px;
-    color: #333333;
-    margin-bottom: 5px;
+    color: #02060c;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .rating-badge {
@@ -176,84 +256,90 @@ body {
     align-items: center;
     margin-right: 5px;
     background-color: #267E3E;
+    /* Can be conditional actually, mostly green */
     color: #fff;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 0px 4px;
+    border-radius: 50%;
+    /* Circle usage in new designs? sticking to pill for now */
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.star-icon {
-    margin-right: 3px;
-    color: #1f9d55;
-    font-size: inherit;
-    color: #fff;
+.rating-badge i {
+    font-size: 12px;
+    margin-right: 2px;
 }
 
 .meta-dot {
     margin: 0 5px;
-    color: inherit;
+    font-size: 8px;
+    /* Correct dot size */
 }
 
 .cuisines,
 .location {
-    font-size: 15px;
-    color: #777777;
+    font-size: 14px;
+    color: #676a6d;
     white-space: nowrap;
     overflow: hidden;
-    line-height: 1.4;
-}
-
-.delivery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin-top: 30px;
+    text-overflow: ellipsis;
+    line-height: 1.5;
 }
 
 .filters {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    margin-left: 70px;
+    margin-left: 0;
+    /* Reset margin */
 }
 
 .filters button {
     background: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 20px;
-    padding: 8px 15px;
+    border: 1px solid #e2e2e7;
+    border-radius: 18px;
+    padding: 8px 16px;
     font-size: 14px;
-    color: #333333;
+    font-weight: 500;
+    color: #02060c;
     cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(2, 6, 12, 0.04) 0px 2px 12px;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
 .filters button:hover {
-    background: #eeeeee;
+    background: #f0f0f5;
+    transform: translateY(-1px);
+    box-shadow: rgba(2, 6, 12, 0.08) 0px 4px 16px;
 }
 
 .footer {
     background-color: #02060c;
     color: #ffffff;
-    padding: 50px 0 20px 0;
+    padding: 50px 0;
     margin-top: 50px;
-    position: relative;
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #4f4f4f;
+    flex-wrap: wrap;
+    /* responsive wrap */
+    gap: 40px;
 }
 
 .footer-content>div {
+    min-width: 200px;
     flex: 1;
 }
 
 .footer-content h4 {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 20px;
     color: #ffffff;
 }
@@ -263,13 +349,14 @@ body {
 }
 
 .footer-content ul li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .footer-content ul li a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
     font-size: 16px;
+    transition: color 0.2s;
 }
 
 .footer-content ul li a:hover {
@@ -277,14 +364,85 @@ body {
 }
 
 .footer-logo {
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 800;
     color: #ffffff;
-    margin-bottom: 10px;
-    display: block;
+    margin-bottom: 15px;
 }
 
-.copyright {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
+/* --- Media Queries --- */
+
+@media (max-width: 900px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-content {
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+
+    .nav-links a span {
+        display: none;
+        /* Hide text on tablet */
+    }
+
+    .nav-links a img {
+        margin-right: 0;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        height: 60px;
+    }
+
+    .logo {
+        height: 80px;
+        margin-right: -20px;
+        transition: transform 0.1s;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .logo-text {
+        font-size: 20px;
+        transition: transform 0.1s;
+    }
+
+    .section-title {
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .mind-grid img {
+        width: 100px;
+        height: 120px;
+        min-width: 100px;
+    }
+
+    .restaurant-scroll,
+    .delivery-grid {
+        grid-template-columns: 1fr;
+        /* Full width for cards on mobile */
+    }
+
+    .filters {
+        gap: 8px;
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
 }
